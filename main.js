@@ -60,7 +60,7 @@ function start(){
             optional: [{sourceId: videoSource}]
         }
     };
-    navigator.getUserMedia(constraints, successCallback, errorCallback);
+    //navigator.getUserMedia(constraints, successCallback, errorCallback);
 }
 
 audioSelect.onchange = start;
