@@ -1,4 +1,3 @@
-'use strict';
 var threshold = 128;
 var DEBUG = false;
 
@@ -60,15 +59,10 @@ function start(){
             optional: [{sourceId: videoSource}]
         }
     };
-    //navigator.getUserMedia(constraints, successCallback, errorCallback);
-}
 
-audioSelect.onchange = start;
-videoSelect.onchange = start;
 
-start();
-window.onload = function() {
 
+    navigator.getUserMedia(constraints, successCallback, errorCallback);
 
     var canvas = document.createElement('canvas');
     canvas.width = 320;
@@ -239,5 +233,15 @@ window.onload = function() {
             cm[15] = 1;
         }
     }, 15);
+}
+
+audioSelect.onchange = start;
+videoSelect.onchange = start;
+
+start();
+window.onload = function() {
+
+
+
 }
 
