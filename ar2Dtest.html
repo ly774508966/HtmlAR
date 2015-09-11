@@ -18,19 +18,54 @@
         video.style.display = 'none';
         video.controls = true;
 
-        var getUserMedia = function(t, onsuccess, onerror) {
-            if (navigator.getUserMedia) {
-                return navigator.getUserMedia(t, onsuccess, onerror);
-            } else if (navigator.webkitGetUserMedia) {
-                return navigator.webkitGetUserMedia(t, onsuccess, onerror);
-            } else if (navigator.mozGetUserMedia) {
-                return navigator.mozGetUserMedia(t, onsuccess, onerror);
-            } else if (navigator.msGetUserMedia) {
-                return navigator.msGetUserMedia(t, onsuccess, onerror);
-            } else {
-                onerror(new Error("No getUserMedia implementation found."));
+        MediaStreamTrack.getSources(function(sourceInfos) {
+            var audioSource = null;
+            var videoSource = null;
+
+            for (var i = 0; i != sourceInfos.length; ++i) {
+                var sourceInfo = sourceInfos[i];
+                if (sourceInfo.kind === 'audio') {
+                    console.log(sourceInfo.id, sourceInfo.label || 'microphone');
+
+                    audioSource = sourceInfo.id;
+                } else if (sourceInfo.kind === 'video') {
+                    console.log(sourceInfo.id, sourceInfo.label || 'camera');
+
+                    videoSource = sourceInfo.id;
+                } else {
+                    console.log('Some other kind of source: ', sourceInfo);
+                }
             }
-        };
+
+            sourceSelected(audioSource, videoSource);
+        });
+
+        function sourceSelected(audioSource, videoSource) {
+            var constraints = {
+                audio: {
+                    optional: [{sourceId: audioSource}]
+                },
+                video: {
+                    optional: [{sourceId: videoSource}]
+                }
+            };
+
+            var getUserMedia = function(constraints, onsuccess, onerror) {
+                if (navigator.getUserMedia) {
+                    return navigator.getUserMedia(t, onsuccess, onerror);
+                } else if (navigator.webkitGetUserMedia) {
+                    return navigator.webkitGetUserMedia(t, onsuccess, onerror);
+                } else if (navigator.mozGetUserMedia) {
+                    return navigator.mozGetUserMedia(t, onsuccess, onerror);
+                } else if (navigator.msGetUserMedia) {
+                    return navigator.msGetUserMedia(t, onsuccess, onerror);
+                } else {
+                    onerror(new Error("No getUserMedia implementation found."));
+                }
+            };
+        }
+
+
 
         var URL = window.URL || window.webkitURL;
         var createObjectURL = URL.createObjectURL || webkitURL.createObjectURL;
