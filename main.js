@@ -1,4 +1,4 @@
-
+/*
 threshold = 128;
 DEBUG = false;
 
@@ -11,7 +11,7 @@ video.loop = true;
 video.volume = 0;
 video.autoplay = true;
 video.style.display = 'none';
-video.controls = true;
+video.controls = true;*/
 
 var videoElement = document.querySelector('video');
 var audioSelect = document.querySelector('select#audioSource');
@@ -56,7 +56,6 @@ function errorCallback(error){
 }
 
 function start(){
-    document.body.appendChild(video);
     if (!!window.stream) {
         videoElement.src = null;
         window.stream.stop();
@@ -71,7 +70,6 @@ function start(){
 
 }
 
-audioSelect.onchange = start;
 videoSelect.onchange = start;
 
 start();
