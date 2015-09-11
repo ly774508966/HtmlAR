@@ -1,5 +1,8 @@
 'use strict';
+threshold = 128;
+DEBUG = false;
 
+photos = Photos.map(Image.load);
 
 var videoElement = document.querySelector('video');
 var audioSelect = document.querySelector('select#audioSource');
